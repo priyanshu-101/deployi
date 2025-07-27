@@ -755,6 +755,10 @@ table user {
   stripeCustomerId text
   stripeSubscriptionId text
   serversQuantity integer [not null, default: 0]
+  subscriptionTier text [not null, default: 'free']
+  hasUnlimitedDeployments boolean [not null, default: false]
+  unlimitedPlanStartDate timestamp
+  unlimitedPlanEndDate timestamp
 }
 
 table verification {

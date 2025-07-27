@@ -119,6 +119,11 @@ export const users_temp = pgTable("user_temp", {
 	stripeCustomerId: text("stripeCustomerId"),
 	stripeSubscriptionId: text("stripeSubscriptionId"),
 	serversQuantity: integer("serversQuantity").notNull().default(0),
+	// Unlimited Plan Subscription Fields
+	subscriptionTier: text("subscriptionTier").notNull().default("free"), // "free", "unlimited", "legacy"
+	hasUnlimitedDeployments: boolean("hasUnlimitedDeployments").notNull().default(false),
+	unlimitedPlanStartDate: timestamp("unlimitedPlanStartDate"),
+	unlimitedPlanEndDate: timestamp("unlimitedPlanEndDate"),
 });
 
 export const usersRelations = relations(users_temp, ({ one, many }) => ({
@@ -323,4 +328,9 @@ export const apiUpdateUser = createSchema.partial().extend({
 		})
 		.optional(),
 	logCleanupCron: z.string().optional().nullable(),
+	// Subscription tier fields
+	subscriptionTier: z.enum(["free", "unlimited", "legacy"]).optional(),
+	hasUnlimitedDeployments: z.boolean().optional(),
+	unlimitedPlanStartDate: z.date().optional(),
+	unlimitedPlanEndDate: z.date().optional(),
 });
